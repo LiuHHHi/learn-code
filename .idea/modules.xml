@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/learn-code/code-1/code-1.iml" filepath="$PROJECT_DIR$/learn-code/code-1/code-1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/learn-code/code-2/code-2.iml" filepath="$PROJECT_DIR$/learn-code/code-2/code-2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/learn-code/code-3/code-3.iml" filepath="$PROJECT_DIR$/learn-code/code-3/code-3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/learn-code/code-4/code-4.iml" filepath="$PROJECT_DIR$/learn-code/code-4/code-4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/learn-code/learn-code.iml" filepath="$PROJECT_DIR$/learn-code/learn-code.iml" />
+    </modules>
+  </component>
+</project>
