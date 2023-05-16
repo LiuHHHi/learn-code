@@ -1,0 +1,14 @@
+[
+  {
+    "bookName": "语文",
+    "price": 12.3
+  },
+  {
+    "bookName": "数学",
+    "price": 15.3
+  },
+  {
+    "bookName": "英语",
+    "price": 1.3
+  }
+]

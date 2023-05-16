@@ -1,0 +1,17 @@
+{
+  "name": "张三",
+  "age": 18,
+  "createDate": 1672381476253,
+  "height": 1.86,
+  "flagSign": true,
+  "salary": null,
+  "role": [
+    "高级教师",
+    "教授",
+    "大学任课老师"
+  ],
+  "otherInfo": {
+    "qq": 12345678,
+    "email": "12345678@qq.com"
+  }
+}

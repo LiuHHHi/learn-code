@@ -1,0 +1,60 @@
+### get-1 请求
+GET http://localhost:9001/api/v1/get-1
+
+### get-2 没有 dept参数
+GET http://localhost:9001/api/v1/get-2?name=张三&age=18&flag=true&books=第一本书&books=第二本书
+
+### get-2 带dept
+GET http://localhost:9001/api/v1/get-2?name=张三&age=18&flag=true&books=第一本书&books=第二本书&dept=部门
+
+### get-3
+GET http://localhost:9001/api/v1/get-3/张三/18
+
+### post-1-form
+POST http://localhost:9001/api/v1/post-1/form
+Content-Type: multipart/form-data;boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="name"
+Content-Type: text/plain
+
+张三
+--WebAppBoundary
+Content-Disposition: form-data; name="age"
+Content-Type: text/plain
+
+18
+--WebAppBoundary
+
+### x-www-form-urlencoded
+POST http://localhost:9001/api/v1/post-2/x-www-form-urlencoded
+Content-Type: application/x-www-form-urlencoded
+
+name=张三&age=18
+
+### Json
+POST http://localhost:9001/api/v1/post-3/json
+Content-Type: application/json
+
+{
+  "name": "张三",
+  "age": 18
+}
+
+### 上传文件 文件名汉字乱码，不知道什么原因，在POSTMAN中没有乱码
+POST http://localhost:9001/api/v1/post-file
+Content-Type: multipart/form-data;boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="uploadFile"; filename="两手和身子-公猴.png"
+Content-Type: image/png
+
+< ./两手和身子-公猴.png
+--WebAppBoundary
+
+
+### url1
+GET http://localhost:9001/api/v1/url/a/x/a
+
+### url2
+GET http://localhost:9001/api/v1/url/b/x/x/x/x

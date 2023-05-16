@@ -1,0 +1,11 @@
+### 查询全部账号
+GET http://localhost:9002/account/list-account-all
+
+### 保存一个账户
+POST http://localhost:9002/account/save-account
+Content-Type: application/json
+
+{
+  "account": "1002",
+  "passwordText": "1002"
+}

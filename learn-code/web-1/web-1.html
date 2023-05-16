@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- 设置 zh 为中文 ，表示该HTML内容是中文内容 -->
+<html lang="zh">
+<head>
+    <!--  表示该网页的编码是：UTF-8  -->
+    <meta charset="UTF-8">
+    <!--  设置浏览器小图标  -->
+    <link rel="icon" href="https://zh-hans.reactjs.org/favicon.ico">
+    <!--  设置浏览器 上标题  -->
+    <title>标题-入门基础</title>
+    <link rel="stylesheet" type="text/css" href="./css/web-1.css">
+    <script src="./js/web-1.js"></script>
+
+    <!--  https://www.runoob.com/css/css-tutorial.html  -->
+    <style>
+        #one {
+            border-color: brown;
+            border-style: dashed;
+            border-width: 5px;
+        }
+        .class_t {
+            border-color: bisque;
+            border-style: dashed;
+            border-width: 5px;
+        }
+    </style>
+    <!--  https://www.runoob.com/js/js-tutorial.html  -->
+    <script type="text/javascript">
+        var i = 0;
+        function buttonClick() {
+            i += 1;
+            console.log("你好", i);
+        }
+    </script>
+</head>
+<body>
+<div id="one">
+    你好
+</div>
+<div class="class_t">二</div>
+<div class="class_t">三</div>
+<div class="class_2">四</div>
+
+<div>
+    <a target="_blank" href="https://www.runoob.com/try/demo_source/tryhtmlcss_website.htm#">
+        试着编写一个该页面布局
+    </a>
+</div>
+
+<button onclick="buttonClick()">你好</button>
+<button onclick="button2Click()">你好2</button>
+</body>
+</html>

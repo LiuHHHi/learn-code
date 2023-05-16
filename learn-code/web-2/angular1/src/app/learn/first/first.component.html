@@ -1,0 +1,19 @@
+<p>first works!</p>
+
+<!--数据的双向绑定，显示和输入-->
+<div class="my-div1">{{firstData.name}}</div>
+<div class="my-div2"><input [(ngModel)]="firstData.name" type="text"></div>
+
+<!--注意age的变化，点击事件-->
+<div>{{firstData.age}}</div>
+<div><button (click)="ageAddOne()">+1</button></div>
+
+<!--注意变量count的值变化-->
+<div>{{count}}</div>
+<div><button (click)="subCount(count)">-1</button></div>
+
+<div><button (click)="goSecond()">到第二页面</button></div>
+<div><button (click)="goSecond2()">到第二页面2</button></div>
+<div><button (click)="goSecond3()">到第二页面3</button></div>
+<div><button (click)="goSecond4()">到第二页面4</button></div>
+<div><a routerLink="/learn/http">Http页面</a></div>

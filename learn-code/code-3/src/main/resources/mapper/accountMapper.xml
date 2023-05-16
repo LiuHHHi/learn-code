@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunzainfo.code3.mapper.AccountMapper">
+    <select id="findTableAccountAll" resultType="com.yunzainfo.code3.table.TableAccount">
+        select *
+        from account
+    </select>
+
+    <select id="findAccountByAccount" resultType="com.yunzainfo.code3.table.TableAccount">
+        select *
+        from account
+        where account = #{account}
+    </select>
+
+    <update id="updateTableAccountByAccount">
+        update account
+        set gmt_modified = #{t.gmtModified},
+            password     = #{t.password},
+            flag_lock    = #{t.flagLock}
+        where account = #{t.account}
+    </update>
+
+    <insert id="insertTableAccount">
+        insert into account(id, gmt_create, gmt_modified, account, password, flag_lock)
+        values (#{t.id}, #{t.gmtCreate}, #{t.gmtModified}, #{t.account}, #{t.flagLock})
+    </insert>
+
+    <insert id="insertTableAccount1">
+        <selectKey resultType="String" keyProperty="id" order="BEFORE">
+            select uuid();
+        </selectKey>
+        insert into account(id, gmt_create, gmt_modified, account, password, flag_lock)
+        values (#{id}, #{t.gmtCreate}, #{t.gmtModified}, #{t.account}, #{t.password}, #{t.flagLock})
+    </insert>
+
+    <insert id="insertTableAccount2">
+        insert into account(id, gmt_create, gmt_modified, account, password, flag_lock)
+        values (uuid(), systemdata(), systemdata(), #{t.account}, #{t.password}, #{t.flagLock})
+    </insert>
+
+    <!--  https://blog.csdn.net/qq_38186465/article/details/115765253  -->
+    <insert id="insertTableAccount3">
+        insert into account(id, gmt_create, gmt_modified, account, password, flag_lock)
+        values (uuid(), systemdata(), systemdata(), #{account}, #{password}, #{flagLock})
+    </insert>
+
+    <!--  https://www.jb51.net/article/224344.htm  -->
+    <select id="findTableAccountInAccounts" resultType="com.yunzainfo.code3.table.TableAccount">
+        select *
+        from account
+        where account in
+        <foreach collection="accounts" open="(" item="item" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--  https://blog.csdn.net/jisuanjiguoba/article/details/104210442  -->
+    <!--  https://blog.csdn.net/qq_41570658/article/details/118523669  -->
+    <select id="findTableAccountQuery" resultType="com.yunzainfo.code3.table.TableAccount">
+        select *
+        from account
+        <where>
+            <if test="t.account != null and t.account != ''">
+                and account = #{t.account}
+            </if>
+            <if test="t.password != null and t.password != ''">
+                and password = #{t.password}
+            </if>
+        </where>
+    </select>
+
+    <select id="findShortAccountByAccount" resultType="com.yunzainfo.code3.entity.ShortAccount">
+        select id,
+               account,
+               password passwordMd5
+        from account
+        where account = #{account}
+    </select>
+
+    <resultMap id="shortAccount" type="com.yunzainfo.code3.entity.ShortAccount">
+        <id column="id" property="id"/>
+        <result column="account" property="account"/>
+        <result column="password" property="passwordMd5"/>
+    </resultMap>
+    <select id="findShortAccountByAccount1" resultMap="shortAccount">
+        select id,
+               account,
+               password
+        from account
+        where account = #{account}
+    </select>
+
+    <resultMap id="associationAccount" type="com.yunzainfo.code3.entity.AssociationAccount">
+        <id column="id" property="id"/>
+        <result column="account" property="account"/>
+        <result column="password" property="passwordMd5"/>
+        <association property="accountDetail" javaType="com.yunzainfo.code3.table.TableAccountDetail">
+            <id column="ad_id" property="id"/>
+            <result column="ad_account" property="account"/>
+            <result column="sex" property="sex"/>
+        </association>
+    </resultMap>
+    <select id="findAssociationAccountByAccount" resultMap="associationAccount">
+        select a.id, a.account, a.password, b.id ad_id, b.account ad_account, b.sex
+        from account a
+                 left join account_detail b on a.account = b.account
+        where a.account = #{account}
+    </select>
+
+    <!--  https://blog.csdn.net/hanbingge123/article/details/122885843  -->
+    <!--  https://blog.csdn.net/weixin_46645338/article/details/123987406  -->
+    <resultMap id="collectionAccount" type="com.yunzainfo.code3.entity.CollectionAccount">
+        <id column="id" property="id"/>
+        <result column="account" property="account"/>
+        <result column="password" property="passwordMd5"/>
+        <collection property="roles" ofType="java.lang.String" javaType="java.util.List">
+            <result column="role"/>
+        </collection>
+    </resultMap>
+    <select id="findCollectionAccountByAccount" resultMap="collectionAccount">
+        select a.id, a.account, a.password, b.role
+        from account a
+                 left join account_role b on a.account = b.account
+        where a.account = #{account}
+    </select>
+
+
+    <!--  https://blog.csdn.net/Kiss_forever/article/details/115496550  -->
+    <resultMap id="associationAccount1" type="com.yunzainfo.code3.entity.AssociationAccount">
+        <id column="id" property="id"/>
+        <result column="account" property="account"/>
+        <result column="password" property="passwordMd5"/>
+        <association property="accountDetail" javaType="com.yunzainfo.code3.table.TableAccountDetail"
+                     column="{account2=account}"
+                     select="findAccountDetailByAccount"/>
+    </resultMap>
+    <select id="findAccountDetailByAccount" resultType="com.yunzainfo.code3.table.TableAccountDetail">
+        select *
+        from account_detail
+        where account = #{account2}
+    </select>
+    <select id="findAssociationAccountByAccount1" resultMap="associationAccount1">
+        select id, account, password
+        from account
+        where account = #{account}
+    </select>
+
+    <!--  https://blog.51cto.com/u_15060546/2641230  -->
+    <resultMap id="collectionAccount1" type="com.yunzainfo.code3.entity.CollectionAccount">
+        <id column="id" property="id"/>
+        <result column="account" property="account"/>
+        <result column="password" property="passwordMd5"/>
+        <collection property="roles" ofType="java.lang.String" javaType="java.util.List"
+                    select="findAccountRolesByAccountAndPassword" column="{account2=account, password1=password}"/>
+    </resultMap>
+    <select id="findAccountRolesByAccountAndPassword" resultType="String">
+        select `role`
+        from account_role
+        where account = #{account2}
+    </select>
+    <select id="findCollectionAccountByAccount1" resultMap="collectionAccount1">
+        select id, account, password
+        from account
+        where account = #{account}
+    </select>
+</mapper>

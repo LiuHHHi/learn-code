@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="https://zh-hans.reactjs.org/favicon.ico">
+    <title>Http</title>
+    <!--  http://www.axios-js.com/zh-cn/docs/#axios -->
+    <script type="text/javascript" src="js/axios.js"></script>
+    <!--  https://www.runoob.com/jquery/ajax-ajax.html  -->
+    <script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body>
+<div>
+    <label for="number">数字：</label>
+    <input id="number" type="number">
+    <button id="b_number">获取数字</button>
+</div>
+<div>
+    <label>文件：</label>
+    <input id="file" type="file" multiple accept="image/*">
+    <button id="b_file">获取图片文件</button>
+</div>
+<hr>
+<div>
+    <button onclick="get1()">get1</button>
+</div>
+<div>
+    <button onclick="get2()">get2-param</button>
+</div>
+<div>
+    <button onclick="post1()">post1-multiform-data</button>
+</div>
+<div>
+    <button onclick="post2()">post2-x-www-form-urlencoded</button>
+</div>
+<div>
+    <button onclick="post3()">post3-json</button>
+</div>
+<hr>
+<div>
+    <button onclick="jqueryGet1()">jquery-get1</button>
+</div>
+<div>
+    <button onclick="jqueryGet2()">jquery-get2</button>
+</div>
+<div>
+    <button onclick="jqueryPost1()">jqueryPost1-multiform-data</button>
+</div>
+<div>
+    <button onclick="jqueryPost2()">jqueryPost2-x-www-form-urlencoded</button>
+</div>
+<div>
+    <button onclick="jqueryPost3()">jqueryPost3-json</button>
+</div>
+</body>
+<script type="text/javascript">
+
+    $('#b_number').click(function () {
+       const value = $('#number').val();
+       if (value) {
+           alert(value);
+       }
+    });
+
+    $('#b_file').click(function () {
+        const files = $('#file').prop('files');
+        console.log(files);
+    });
+
+    const axiosInstance = axios.create({
+        baseURL: 'http://localhost:9001/api/v1',
+        timeout: 1000
+    })
+
+    function get1() {
+        axiosInstance.get('/get-1').then(function (resp) {
+            console.log(resp);
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    function get2() {
+        const params = new URLSearchParams();
+        params.append('name', '姓名');
+        params.append('age', 18);
+        params.append('flag', true);
+        params.append('books', 'a');
+        params.append('books', 'b');
+        params.append('dept', 'dept');
+        axiosInstance.get('/get-2', {
+            params: params
+        }).then(function (resp) {
+            console.log(resp);
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    function post1() {
+        const formData = new FormData();
+        formData.append('name', '姓名');
+        formData.append('age', 18);
+        axiosInstance.post(
+            '/post-1/form',
+            formData,
+        ).then(function (resp) {
+            console.log(resp);
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    function post2() {
+        const params = new URLSearchParams();
+        params.append('name', '姓名');
+        params.append('age', 18);
+        axiosInstance.post(
+            '/post-2/x-www-form-urlencoded',
+            params
+        ).then(function (resp) {
+            console.log(resp);
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    function post3() {
+        const jsonParam = {
+            name: '姓名',
+            age: 18
+        }
+        axiosInstance.post(
+            '/post-3/json',
+            jsonParam
+        ).then(function (resp) {
+            console.log(resp);
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+
+    function jqueryGet1() {
+        $.get('http://localhost:9001/api/v1/get-1', function (data, status) {
+            console.log(data, status);
+        })
+    }
+
+    function jqueryGet2() {
+        const params = new URLSearchParams();
+        params.append('name', '姓名');
+        params.append('age', 18);
+        params.append('flag', true);
+        params.append('books', 'a');
+        params.append('books', 'b');
+        params.append('dept', 'dept');
+        var paramsString = params.toString();
+        var url  = 'http://localhost:9001/api/v1/get-2?' + paramsString;
+        $.get(url, function (data, status) {
+            console.log(data, status);
+        })
+    }
+
+    function jqueryPost1() {
+        const formData = new FormData();
+        formData.append('name', '姓名');
+        formData.append('age', 18);
+        $.ajax({
+            url: 'http://localhost:9001/api/v1/post-1/form',
+            method: 'POST',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (error) {
+                console.log(error)
+            },
+            complete: function () {
+                console.log('complete');
+            }
+        })
+    }
+
+    function jqueryPost2() {
+        const params = new URLSearchParams();
+        params.append('name', '姓名');
+        params.append('age', 18);
+        $.ajax({
+            url: 'http://localhost:9001/api/v1/post-2/x-www-form-urlencoded',
+            method: 'POST',
+            contentType: false,
+            processData: false,
+            data: params,
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (error) {
+                console.log(error)
+            },
+            complete: function () {
+                console.log('complete');
+            }
+        })
+    }
+
+    function jqueryPost3() {
+        const jsonParam = {
+            name: '姓名',
+            age: 18
+        }
+        $.ajax({
+            url: 'http://localhost:9001/api/v1/post-3/json',
+            method: 'POST',
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(jsonParam),
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (error) {
+                console.log(error)
+            },
+            complete: function () {
+                console.log('complete');
+            }
+        })
+    }
+</script>
+</html>

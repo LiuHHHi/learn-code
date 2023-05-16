@@ -1,0 +1,12 @@
+// https://www.runoob.com/manual/lessguide
+// less 变量引用
+@my-color: #c7edcc;
+@light-color: @my-color + #111;
+
+.my-div1 {
+  background-color: @light-color;
+}
+
+.my-div2 {
+  background-color: @light-color;
+}
